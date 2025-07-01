@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>LeetCode Profile - Raj Shekhar</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            margin: 0;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #e0e7ff 0%, #647dee 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+        /* Animated floating circles */
+        body::before, body::after {
+            content: '';
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(60px);
+            opacity: 0.18;
+            z-index: 0;
+            pointer-events: none;
+        }
+        body::before {
+            width: 420px; height: 420px;
+            background: #7f53ac;
+            top: 2%; left: -120px;
+            animation: float1 18s ease-in-out infinite alternate;
+        }
+        body::after {
+            width: 320px; height: 320px;
+            background: #ffa116;
+            bottom: 8%; right: -80px;
+            animation: float2 22s ease-in-out infinite alternate;
+        }
+        @keyframes float1 {
+            0% { transform: translateY(0) scale(1); }
+            100% { transform: translateY(60px) scale(1.1); }
+        }
+        @keyframes float2 {
+            0% { transform: translateY(0) scale(1); }
+            100% { transform: translateY(-40px) scale(1.15); }
+        }
+        .leetcode-profile {
+            background: rgba(255,255,255,0.85);
+            border-radius: 28px;
+            box-shadow: 0 8px 32px rgba(100,125,222,0.18);
+            padding: 44px 38px 36px 38px;
+            max-width: 480px;
+            width: 100%;
+            margin: 40px auto;
+            position: relative;
+            z-index: 1;
+            text-align: center;
+        }
+        .leetcode-logo {
+            width: 54px;
+            margin-bottom: 10px;
+        }
+        .leetcode-title {
+            font-size: 2.1em;
+            color: #7f53ac;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+        .leetcode-username {
+            font-size: 1.2em;
+            color: #3a7ca5;
+            margin-bottom: 18px;
+        }
+        .circular-progress {
+            width: 110px;
+            height: 110px;
+            margin: 0 auto 18px auto;
+            position: relative;
+        }
+        .circular-progress svg {
+            width: 110px;
+            height: 110px;
+        }
+        .circular-bg {
+            stroke: #e0e7ff;
+            stroke-width: 10;
+        }
+        .circular-bar {
+            stroke: url(#leetcode-gradient);
+            stroke-width: 10;
+            stroke-linecap: round;
+            transition: stroke-dasharray 1s;
+        }
+        .circular-text {
+            font-size: 1.5em;
+            font-weight: 700;
+            fill: #7f53ac;
+            dominant-baseline: middle;
+            text-anchor: middle;
+        }
+        .leetcode-metrics {
+            margin-top: 10px;
+            text-align: left;
+        }
+        .leetcode-metric {
+            margin-bottom: 16px;
+        }
+        .metric-label {
+            color: #3a7ca5;
+            font-size: 1em;
+            margin-right: 8px;
+        }
+        .metric-value {
+            font-weight: 700;
+            font-size: 1.08em;
+            margin-right: 8px;
+        }
+        .leetcode-bar {
+            background: #e0e7ff;
+            border-radius: 6px;
+            height: 8px;
+            width: 100%;
+            margin-top: 4px;
+            margin-bottom: 2px;
+            overflow: hidden;
+        }
+        .leetcode-bar-inner {
+            height: 100%;
+            background: linear-gradient(90deg,#ffa116,#7f53ac);
+            border-radius: 6px;
+            transition: width 0.7s cubic-bezier(.4,0,.2,1);
+        }
+        .leetcode-bar.easy .leetcode-bar-inner { background: linear-gradient(90deg,#7bed9f,#ffa116); }
+        .leetcode-bar.medium .leetcode-bar-inner { background: linear-gradient(90deg,#ffa116,#ff6e7f); }
+        .leetcode-bar.hard .leetcode-bar-inner { background: linear-gradient(90deg,#ff6e7f,#7f53ac); }
+        .leetcode-badges {
+            margin: 18px 0 10px 0;
+        }
+        .leetcode-badge {
+            display: inline-block;
+            background: linear-gradient(90deg,#ffa116,#7f53ac);
+            color: #fff;
+            border-radius: 999px;
+            padding: 6px 18px;
+            font-size: 1em;
+            margin-right: 8px;
+            margin-bottom: 6px;
+            font-weight: 500;
+            box-shadow: 0 1px 4px rgba(100,125,222,0.10);
+        }
+        .leetcode-link-btn {
+            display:inline-block;
+            margin-top: 18px;
+            padding:10px 24px;
+            background:#ffa116;
+            color:#232946;
+            border-radius:8px;
+            font-weight:600;
+            text-decoration:none;
+            box-shadow:0 2px 8px rgba(255,171,22,0.13);
+            transition:background 0.2s;
+            font-size:1.1em;
+        }
+        .leetcode-link-btn:hover {
+            background:#ffb86c;
+            color:#232946;
+        }
+        .back-btn {
+            display:inline-block;
+            margin-top: 18px;
+            margin-right: 10px;
+            padding:10px 24px;
+            background:linear-gradient(90deg,#7f53ac,#647dee);
+            color:#fff;
+            border-radius:8px;
+            font-weight:600;
+            text-decoration:none;
+            box-shadow:0 2px 8px rgba(100,125,222,0.13);
+            transition:background 0.2s;
+            font-size:1.1em;
+        }
+        .back-btn:hover {
+            background:linear-gradient(90deg,#ffb86c,#ff6e7f);
+            color:#232946;
+        }
+        .recent-activity {
+            margin-top: 28px;
+            text-align: left;
+        }
+        .recent-title {
+            color: #7f53ac;
+            font-size: 1.1em;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+        .recent-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+        .recent-list li {
+            background: linear-gradient(90deg,#e0e7ff 60%,#fdf6e3 100%);
+            color: #232946;
+            border-radius: 8px;
+            padding: 8px 14px;
+            margin-bottom: 7px;
+            font-size: 1em;
+        }
+    </style>
+</head>
+<body>
+    <div class="leetcode-profile">
+        <img src="https://leetcode.com/static/images/LeetCode_logo_rvs.png" alt="LeetCode" class="leetcode-logo">
+        <div class="leetcode-title">LeetCode Profile</div>
+        <div class="leetcode-username">raj shekhar (RAJ_SHEKHAR0007)</div>
+        <div class="circular-progress">
+            <svg>
+                <defs>
+                    <linearGradient id="leetcode-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                        <stop offset="0%" stop-color="#ffa116"/>
+                        <stop offset="100%" stop-color="#7f53ac"/>
+                    </linearGradient>
+                </defs>
+                <circle class="circular-bg" cx="55" cy="55" r="45" fill="none"/>
+                <circle class="circular-bar" cx="55" cy="55" r="45" fill="none" stroke-dasharray="13.5 282.6"/>
+                <text class="circular-text" x="55" y="60">6</text>
+            </svg>
+            <div style="font-size:1em;color:#7f53ac;margin-top:4px;">Problems Solved</div>
+        </div>
+        <div class="leetcode-badges">
+            <span class="leetcode-badge">DSA</span>
+            <span class="leetcode-badge">Python</span>
+            <span class="leetcode-badge">C++</span>
+        </div>
+        <div class="leetcode-metrics">
+            <div class="leetcode-metric">
+                <span class="metric-label">Easy</span>
+                <span class="metric-value">6</span>
+                <div class="leetcode-bar easy"><div class="leetcode-bar-inner" style="width:0.7%"></div></div>
+            </div>
+            <div class="leetcode-metric">
+                <span class="metric-label">Medium</span>
+                <span class="metric-value">0</span>
+                <div class="leetcode-bar medium"><div class="leetcode-bar-inner" style="width:0%"></div></div>
+            </div>
+            <div class="leetcode-metric">
+                <span class="metric-label">Hard</span>
+                <span class="metric-value">0</span>
+                <div class="leetcode-bar hard"><div class="leetcode-bar-inner" style="width:0%"></div></div>
+            </div>
+            <div class="leetcode-metric">
+                <span class="metric-label">Rank</span>
+                <span class="metric-value">~5,000,000</span>
+            </div>
+        </div>
+        <div class="recent-activity">
+            <div class="recent-title">Recent Activity</div>
+            <ul class="recent-list">
+                <li>Solved: Single Number (Easy) - 8 days ago</li>
+                <li>Solved: Missing Number (Easy) - 8 days ago</li>
+            </ul>
+        </div>
+        <a href="https://leetcode.com/RAJ_SHEKHAR0007/" target="_blank" class="leetcode-link-btn">View My LeetCode Profile</a>
+        <a href="portfolio.html" class="back-btn">← Back to Portfolio</a>
+    </div>
+</body>
+</html> 
