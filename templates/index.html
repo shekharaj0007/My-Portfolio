@@ -1,998 +1,230 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Portfolio -Raj Shekhar</title>
-    <style>
-        body {
-            font-family: 'Segoe UI', Arial, sans-serif;
-            margin: 0;
-            min-height: 100vh;
-            /* Animated gradient background */
-            background: linear-gradient(270deg, #e0e7ff, #fdf6e3, #7f53ac, #647dee, #e0e7ff);
-            background-size: 400% 400%;
-            animation: gradientBG 15s ease infinite;
-            position: relative;
-            overflow-x: hidden;
-        }
-        /* Animated floating circles */
-        body::before, body::after {
-            content: '';
-            position: fixed;
-            border-radius: 50%;
-            filter: blur(40px);
-            opacity: 0.25;
-            z-index: 0;
-            pointer-events: none;
-        }
-        body::before {
-            width: 320px; height: 320px;
-            background: #7f53ac;
-            top: 5%; left: -120px;
-            animation: float1 18s ease-in-out infinite alternate;
-        }
-        body::after {
-            width: 220px; height: 220px;
-            background: #647dee;
-            bottom: 8%; right: -80px;
-            animation: float2 22s ease-in-out infinite alternate;
-        }
-        @keyframes float1 {
-            0% { transform: translateY(0) scale(1); }
-            100% { transform: translateY(60px) scale(1.1); }
-        }
-        @keyframes float2 {
-            0% { transform: translateY(0) scale(1); }
-            100% { transform: translateY(-40px) scale(1.15); }
-        }
-        @keyframes gradientBG {
-            0% {background-position: 0% 50%;}
-            50% {background-position: 100% 50%;}
-            100% {background-position: 0% 50%;}
-        }
-        /* Animated entrance for bars */
-        .edu-list li, .ach-list li, .pos-list li, .project-card {
-            opacity: 0;
-            transform: translateY(40px) scale(0.98);
-            transition: opacity 0.7s cubic-bezier(.4,0,.2,1), transform 0.7s cubic-bezier(.4,0,.2,1);
-        }
-        .edu-list li.in-view, .ach-list li.in-view, .pos-list li.in-view, .project-card.in-view {
-            opacity: 1;
-            transform: none;
-        }
-        #portfolio {
-            background: #fff;
-            border-radius: 20px;
-            box-shadow: 0 8px 32px rgba(60,120,165,0.13);
-            padding: 40px 32px 32px 32px;
-            margin: 48px auto;
-            max-width: 950px;
-            animation: fadeInPortfolio 1.2s cubic-bezier(.4,0,.2,1);
-        }
-        @keyframes fadeInPortfolio {
-            from { opacity: 0; transform: translateY(40px); }
-            to { opacity: 1; transform: none; }
-        }
-        #portfolio h1 {
-            font-size: 2.7em;
-            color: #2d3a4a;
-            margin-bottom: 0.2em;
-            position: relative;
-            z-index: 1;
-        }
-        #portfolio h1::after {
-            content: '';
-            display: block;
-            width: 80px;
-            height: 6px;
-            background: linear-gradient(90deg, #7f53ac 0%, #647dee 100%);
-            border-radius: 3px;
-            margin-top: 10px;
-            margin-bottom: 8px;
-        }
-        #portfolio h2 {
-            color: #3a7ca5;
-            border-bottom: 2px solid #e3e8ee;
-            padding-bottom: 4px;
-            margin-top: 2.2em;
-            opacity: 0;
-            animation: fadeInHeading 1s forwards;
-        }
-        #portfolio h2:nth-of-type(1) { animation-delay: 0.2s; }
-        #portfolio h2:nth-of-type(2) { animation-delay: 0.4s; }
-        #portfolio h2:nth-of-type(3) { animation-delay: 0.6s; }
-        #portfolio h2:nth-of-type(4) { animation-delay: 0.8s; }
-        #portfolio h2:nth-of-type(5) { animation-delay: 1s; }
-        @keyframes fadeInHeading {
-            to { opacity: 1; transform: none; }
-            from { opacity: 0; transform: translateY(20px); }
-        }
-        #portfolio ul { list-style: none; padding: 0; }
-        #portfolio li { margin-bottom: 18px; }
-        .contact-info {
-            color: #555;
-            margin-bottom: 18px;
-            font-size: 1.08em;
-        }
-        .edu-list li, .ach-list li, .pos-list li {
-            background: linear-gradient(90deg, #e0e7ff 0%, #fdf6e3 100%);
-            border-radius: 10px;
-            padding: 12px 18px;
-            margin-bottom: 10px;
-            box-shadow: 0 2px 8px rgba(127,83,172,0.04);
-            transition: box-shadow 0.3s, transform 0.3s;
-        }
-        .edu-list li:hover, .ach-list li:hover, .pos-list li:hover {
-            box-shadow: 0 6px 18px rgba(127,83,172,0.13);
-            transform: translateY(-3px) scale(1.03);
-        }
-        .projects {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 32px;
-            margin-bottom: 10px;
-            justify-content: center;
-        }
-        .project-card {
-            position: relative;
-            background: linear-gradient(135deg,rgba(255,255,255,0.65) 60%,rgba(127,83,172,0.08) 100%);
-            border-radius: 22px;
-            box-shadow: 0 8px 32px rgba(100,125,222,0.13);
-            padding: 32px 26px 24px 26px;
-            min-width: 320px;
-            max-width: 400px;
-            flex: 1 1 340px;
-            margin-bottom: 0;
-            overflow: hidden;
-            border: 2.5px solid rgba(127,83,172,0.10);
-            backdrop-filter: blur(8px);
-            transition: box-shadow 0.3s, border 0.3s, transform 0.3s;
-            opacity: 0;
-            transform: translateY(40px) scale(0.98);
-            animation: none;
-        }
-        .project-card.in-view {
-            opacity: 1;
-            transform: none;
-            animation: fadeInCard 1s cubic-bezier(.4,0,.2,1);
-        }
-        .project-card:hover {
-            box-shadow: 0 16px 48px rgba(100,125,222,0.22);
-            border: 2.5px solid #7f53ac;
-            transform: translateY(-10px) scale(1.04) rotate(-1deg);
-        }
-        @keyframes fadeInCard {
-            from { opacity: 0; transform: translateY(40px) scale(0.98); }
-            to { opacity: 1; transform: none; }
-        }
-        .project-tagline {
-            display: block;
-            background: linear-gradient(90deg,#7f53ac,#647dee);
-            color: #fff;
-            font-size: 1.08em;
-            margin: -32px -26px 18px -26px;
-            padding: 10px 0 10px 24px;
-            border-radius: 22px 22px 0 0;
-            font-style: italic;
-            font-weight: 500;
-            letter-spacing: 0.01em;
-            box-shadow: 0 2px 8px rgba(127,83,172,0.08);
-        }
-        .project-badges {
-            margin-bottom: 12px;
-        }
-        .badge {
-            display: inline-block;
-            background: linear-gradient(90deg, #7f53ac 0%, #647dee 100%);
-            color: #fff;
-            border-radius: 999px;
-            padding: 5px 16px 5px 12px;
-            font-size: 1em;
-            margin-right: 7px;
-            margin-bottom: 6px;
-            font-weight: 500;
-            box-shadow: 0 1px 4px rgba(100,125,222,0.10);
-        }
-        .badge::before {
-            margin-right: 6px;
-        }
-        .badge:nth-child(1)::before { content: '🐍'; }
-        .badge:nth-child(2)::before { content: '🗣️'; }
-        .badge:nth-child(3)::before { content: '🔊'; }
-        .badge:nth-child(4)::before { content: '🖼️'; }
-        .badge[title*="LangChain"]::before { content: '🔗'; }
-        .badge[title*="OpenAI"]::before { content: '🤖'; }
-        .badge[title*="FAISS"]::before { content: '📚'; }
-        .badge[title*="Streamlit"]::before { content: '🌐'; }
-        .badge[title*="MERN"]::before { content: '🌱'; }
-        .badge[title*="Chart.js"]::before { content: '📊'; }
-        .badge[title*="WebSocket"]::before { content: '🔌'; }
-        .badge[title*="Flask"]::before { content: '🍶'; }
-        .badge[title*="React"]::before { content: '⚛️'; }
-        .badge[title*="SQLite"]::before { content: '💾'; }
-        .project-role {
-            font-size: 1em;
-            color: #3a7ca5;
-            margin-bottom: 8px;
-            font-weight: 600;
-        }
-        .project-impact {
-            margin-top: 12px;
-            font-size: 1em;
-            color: #fff;
-            background: linear-gradient(90deg,#7f53ac,#647dee);
-            border-radius: 8px;
-            padding: 8px 16px;
-            font-style: italic;
-            box-shadow: 0 1px 4px rgba(100,125,222,0.10);
-        }
-        .project-links {
-            margin-top: 14px;
-        }
-        .btn {
-            display: inline-block;
-            padding: 9px 22px 9px 18px;
-            background: linear-gradient(90deg,#7f53ac,#647dee);
-            color: #fff;
-            border-radius: 8px;
-            text-decoration: none;
-            font-weight: 600;
-            font-size: 1.05em;
-            box-shadow: 0 2px 8px rgba(100,125,222,0.13);
-            transition: background 0.2s, transform 0.2s;
-            position: relative;
-        }
-        .btn::after {
-            content: '🔗';
-            margin-left: 8px;
-            font-size: 1.1em;
-        }
-        .btn:hover {
-            background: linear-gradient(90deg,#ffb86c,#ff6e7f);
-            color: #2d3a4a;
-            transform: scale(1.07) rotate(-2deg);
-        }
-        @media (max-width: 900px) {
-            .projects { flex-direction: column; gap: 18px; }
-            .project-card { max-width: 98vw; min-width: 0; }
-        }
-        .skills-list {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 12px;
-            margin-bottom: 0;
-        }
-        .skill-badge {
-            background: linear-gradient(90deg, #7f53ac 0%, #647dee 100%);
-            color: #fff;
-            border-radius: 8px;
-            padding: 7px 16px;
-            font-size: 1em;
-            margin-bottom: 8px;
-            box-shadow: 0 1px 4px rgba(100,125,222,0.08);
-            transition: background 0.3s, transform 0.2s;
-            cursor: pointer;
-            opacity: 0;
-            animation: fadeInBadge 0.7s forwards;
-        }
-        .skill-badge:hover {
-            background: linear-gradient(90deg, #ffb86c 0%, #ff6e7f 100%);
-            color: #2d3a4a;
-            transform: scale(1.09) rotate(-2deg);
-        }
-        .skills-list .skill-badge:nth-child(n) { animation-delay: calc(0.1s * var(--i)); }
-        @keyframes fadeInBadge {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: none; }
-        }
-        @media (max-width: 700px) {
-            #portfolio { padding: 12px; }
-            .projects { flex-direction: column; }
-        }
-        .status-badge {
-            display:inline-block;
-            padding:4px 14px;
-            border-radius:999px;
-            font-size:0.98em;
-            font-weight:600;
-            margin-bottom:8px;
-            margin-top:8px;
-        }
-        .status-badge.completed { background:linear-gradient(90deg,#7f53ac,#647dee);color:#fff; }
-        .status-badge.inprogress { background:linear-gradient(90deg,#ffb86c,#ff6e7f);color:#2d3a4a; }
-        .progress-bar {
-            width:100%;
-            height:8px;
-            background:#e0e7ff;
-            border-radius:6px;
-            margin-bottom:10px;
-            overflow:hidden;
-        }
-        .progress {
-            height:100%;
-            background:linear-gradient(90deg,#7f53ac,#647dee);
-            border-radius:6px;
-            transition:width 0.7s cubic-bezier(.4,0,.2,1);
-        }
-        .badge[title]:hover::after {
-            content: attr(title);
-            position: absolute;
-            left: 0;
-            top: 110%;
-            background: #2d3a4a;
-            color: #fff;
-            padding: 6px 14px;
-            border-radius: 8px;
-            font-size: 0.98em;
-            white-space: nowrap;
-            z-index: 10;
-            box-shadow: 0 2px 8px rgba(60,120,165,0.13);
-            opacity: 1;
-            pointer-events: none;
-        }
-        .badge[title] { position: relative; cursor: pointer; }
-        .modal { display:none;align-items:center;justify-content:center; }
-        .modal-content { animation: fadeInCard 0.7s; }
-        /* Card tilt effect */
-        .project-card {
-            will-change: transform;
-        }
-        body.dark-mode {
-          background: linear-gradient(135deg, #232946 0%, #121629 100%) !important;
-          color: #f3f6fa !important;
-        }
-        body.dark-mode #portfolio {
-          background: #232946 !important;
-          color: #f3f6fa !important;
-        }
-        body.dark-mode .project-card {
-          background: linear-gradient(135deg,rgba(44,62,80,0.85) 60%,rgba(127,83,172,0.13) 100%) !important;
-          color: #f3f6fa !important;
-          border: 2.5px solid #647dee !important;
-        }
-        body.dark-mode .project-tagline, body.dark-mode .project-impact {
-          background: linear-gradient(90deg,#647dee,#7f53ac) !important;
-          color: #fff !important;
-        }
-        body.dark-mode .btn {
-          background: linear-gradient(90deg,#647dee,#7f53ac) !important;
-          color: #fff !important;
-        }
-        body.dark-mode .btn:hover {
-          background: linear-gradient(90deg,#ffb86c,#ff6e7f) !important;
-          color: #232946 !important;
-        }
-        body.dark-mode .status-badge.completed {
-          background: linear-gradient(90deg,#647dee,#7f53ac) !important;
-          color: #fff !important;
-        }
-        body.dark-mode .status-badge.inprogress {
-          background: linear-gradient(90deg,#ffb86c,#ff6e7f) !important;
-          color: #232946 !important;
-        }
-        body.dark-mode .progress-bar {
-          background: #232946 !important;
-        }
-        body.dark-mode .progress {
-          background: linear-gradient(90deg,#647dee,#7f53ac) !important;
-        }
-        body.dark-mode .modal-content {
-          background: #232946 !important;
-          color: #f3f6fa !important;
-        }
-        body.dark-mode .modal {
-          background: rgba(18,22,41,0.92) !important;
-        }
-        body.dark-mode .contact-info, body.dark-mode .project-role, body.dark-mode .project-links, body.dark-mode .project-badges, body.dark-mode .project-card ul, body.dark-mode .project-card strong {
-          color: #f3f6fa !important;
-        }
-        body.dark-mode, body.dark-mode * {
-          color: #f3f6fa !important;
-          border-color: #647dee !important;
-        }
-        body.dark-mode a, body.dark-mode a:visited {
-          color: #8ab4f8 !important;
-        }
-        body.dark-mode .project-card ul li,
-        body.dark-mode .project-card strong,
-        body.dark-mode .project-card .project-role,
-        body.dark-mode .project-card .project-badges,
-        body.dark-mode .project-card .project-links,
-        body.dark-mode .project-card .btn,
-        body.dark-mode .project-card .badge {
-          color: #f3f6fa !important;
-        }
-        body.dark-mode .badge {
-          background: linear-gradient(90deg, #232946 0%, #647dee 100%) !important;
-          color: #fff !important;
-        }
-        body.dark-mode .project-tagline, body.dark-mode .project-impact {
-          background: linear-gradient(90deg,#647dee,#7f53ac) !important;
-          color: #fff !important;
-        }
-        body.dark-mode .modal-content {
-          background: #232946 !important;
-          color: #f3f6fa !important;
-        }
-        body.dark-mode .modal {
-          background: rgba(18,22,41,0.92) !important;
-        }
-        body.dark-mode .status-badge.completed {
-          background: linear-gradient(90deg,#647dee,#7f53ac) !important;
-          color: #fff !important;
-        }
-        body.dark-mode .status-badge.inprogress {
-          background: linear-gradient(90deg,#ffb86c,#ff6e7f) !important;
-          color: #232946 !important;
-        }
-        body.dark-mode .progress-bar {
-          background: #232946 !important;
-        }
-        body.dark-mode .progress {
-          background: linear-gradient(90deg,#647dee,#7f53ac) !important;
-        }
-        body.dark-mode .contact-info, body.dark-mode .project-role, body.dark-mode .project-links, body.dark-mode .project-badges, body.dark-mode .project-card ul, body.dark-mode .project-card strong {
-          color: #f3f6fa !important;
-        }
-        body.dark-mode h1, body.dark-mode h2, body.dark-mode h3, body.dark-mode h4, body.dark-mode h5, body.dark-mode h6 {
-          color: #fff !important;
-        }
-        body.dark-mode .edu-list li,
-        body.dark-mode .ach-list li,
-        body.dark-mode .pos-list li {
-          background: linear-gradient(90deg, #232946 0%, #232946 100%) !important;
-          color: #f3f6fa !important;
-          border: 1px solid #647dee !important;
-        }
-        .leetcode-section {
-          background: rgba(255,255,255,0.7);
-          border-radius: 18px;
-          box-shadow: 0 4px 24px rgba(100,125,222,0.10);
-          padding: 28px 22px 20px 22px;
-          margin-bottom: 32px;
-          max-width: 500px;
-        }
-        body.dark-mode .leetcode-section {
-          background: #232946 !important;
-        }
-        .leetcode-link {
-          display: flex;
-          align-items: center;
-          text-decoration: none;
-          font-weight: 600;
-          color: #ffa116;
-          margin-bottom: 18px;
-          font-size: 1.1em;
-        }
-        .leetcode-logo {
-          width: 36px;
-          margin-right: 12px;
-        }
-        .leetcode-metrics {
-          margin-top: 10px;
-        }
-        .leetcode-metric {
-          margin-bottom: 12px;
-        }
-        .metric-label {
-          color: #3a7ca5;
-          font-size: 1em;
-          margin-right: 8px;
-        }
-        body.dark-mode .metric-label {
-          color: #8ab4f8;
-        }
-        .metric-value {
-          font-weight: 700;
-          font-size: 1.08em;
-          margin-right: 8px;
-        }
-        .leetcode-bar {
-          background: #e0e7ff;
-          border-radius: 6px;
-          height: 8px;
-          width: 100%;
-          margin-top: 4px;
-          margin-bottom: 2px;
-          overflow: hidden;
-        }
-        body.dark-mode .leetcode-bar {
-          background: #232946;
-        }
-        .leetcode-bar-inner {
-          height: 100%;
-          background: linear-gradient(90deg,#ffa116,#7f53ac);
-          border-radius: 6px;
-          transition: width 0.7s cubic-bezier(.4,0,.2,1);
-        }
-        .leetcode-bar.easy .leetcode-bar-inner { background: linear-gradient(90deg,#7bed9f,#ffa116); }
-        .leetcode-bar.medium .leetcode-bar-inner { background: linear-gradient(90deg,#ffa116,#ff6e7f); }
-        .leetcode-bar.hard .leetcode-bar-inner { background: linear-gradient(90deg,#ff6e7f,#7f53ac); }
-        .glass-card {
-          background: rgba(255,255,255,0.75);
-          border-radius: 22px;
-          box-shadow: 0 8px 32px rgba(100,125,222,0.13);
-          padding: 32px 24px 24px 24px;
-          margin-bottom: 32px;
-          max-width: 540px;
-          position: relative;
-          overflow: hidden;
-        }
-        body.dark-mode .glass-card {
-          background: rgba(35,41,70,0.95) !important;
-        }
-        .leetcode-header {
-          display: flex;
-          align-items: center;
-          gap: 16px;
-          margin-bottom: 10px;
-        }
-        .leetcode-username {
-          font-size: 1.1em;
-          color: #7f53ac;
-          font-weight: 600;
-        }
-        .leetcode-progress-flex {
-          display: flex;
-          align-items: center;
-          gap: 24px;
-          margin-bottom: 10px;
-        }
-        .circular-progress {
-          width: 96px;
-          height: 96px;
-          position: relative;
-        }
-        .circular-progress svg {
-          width: 96px;
-          height: 96px;
-        }
-        .circular-bg {
-          stroke: #e0e7ff;
-          stroke-width: 9;
-        }
-        .circular-bar {
-          stroke: url(#leetcode-gradient);
-          stroke-width: 9;
-          stroke-linecap: round;
-          transition: stroke-dasharray 1s;
-        }
-        .circular-text {
-          font-size: 1.3em;
-          font-weight: 700;
-          fill: #7f53ac;
-          dominant-baseline: middle;
-          text-anchor: middle;
-        }
-        .circular-label {
-          font-size: 0.98em;
-          color: #7f53ac;
-          text-align: center;
-          margin-top: 2px;
-        }
-        .leetcode-badges {
-          display: flex;
-          flex-direction: column;
-          gap: 7px;
-        }
-        .leetcode-badge {
-          display: flex;
-          align-items: center;
-          background: linear-gradient(90deg,#ffa116,#7f53ac);
-          color: #fff;
-          border-radius: 999px;
-          padding: 6px 18px;
-          font-size: 1em;
-          font-weight: 500;
-          box-shadow: 0 1px 4px rgba(100,125,222,0.10);
-          margin-bottom: 0;
-        }
-        .badge-icon {
-          margin-right: 8px;
-          font-size: 1.1em;
-        }
-        .leetcode-metrics {
-          margin-top: 10px;
-        }
-        .leetcode-metric {
-          margin-bottom: 12px;
-        }
-        .metric-label {
-          color: #3a7ca5;
-          font-size: 1em;
-          margin-right: 8px;
-        }
-        body.dark-mode .metric-label {
-          color: #8ab4f8;
-        }
-        .metric-value {
-          font-weight: 700;
-          font-size: 1.08em;
-          margin-right: 8px;
-        }
-        .leetcode-bar {
-          background: #e0e7ff;
-          border-radius: 6px;
-          height: 8px;
-          width: 100%;
-          margin-top: 4px;
-          margin-bottom: 2px;
-          overflow: hidden;
-        }
-        body.dark-mode .leetcode-bar {
-          background: #232946;
-        }
-        .leetcode-bar-inner {
-          height: 100%;
-          background: linear-gradient(90deg,#ffa116,#7f53ac);
-          border-radius: 6px;
-          transition: width 0.7s cubic-bezier(.4,0,.2,1);
-        }
-        .leetcode-bar.easy .leetcode-bar-inner { background: linear-gradient(90deg,#7bed9f,#ffa116); }
-        .leetcode-bar.medium .leetcode-bar-inner { background: linear-gradient(90deg,#ffa116,#ff6e7f); }
-        .leetcode-bar.hard .leetcode-bar-inner { background: linear-gradient(90deg,#ff6e7f,#7f53ac); }
-        .recent-activity {
-          margin-top: 18px;
-        }
-        .recent-title {
-          color: #7f53ac;
-          font-size: 1.05em;
-          font-weight: 600;
-          margin-bottom: 8px;
-        }
-        .recent-list {
-          list-style: none;
-          padding: 0;
-          margin: 0;
-        }
-        .recent-list li {
-          background: linear-gradient(90deg,#e0e7ff 60%,#fdf6e3 100%);
-          color: #232946;
-          border-radius: 8px;
-          padding: 8px 14px;
-          margin-bottom: 7px;
-          font-size: 1em;
-          display: flex;
-          align-items: center;
-        }
-        .activity-icon {
-          margin-right: 8px;
-          font-size: 1.1em;
-        }
-        .leetcode-links {
-          margin-top: 18px;
-          display: flex;
-          gap: 12px;
-        }
-        .leetcode-btn {
-          display:inline-block;
-          padding:10px 24px;
-          background:linear-gradient(90deg,#7f53ac,#647dee);
-          color:#fff;
-          border-radius:8px;
-          font-weight:600;
-          text-decoration:none;
-          box-shadow:0 2px 8px rgba(100,125,222,0.13);
-          transition:background 0.2s;
-          font-size:1.1em;
-        }
-        .leetcode-btn.external {
-          background: #ffa116;
-          color: #232946;
-        }
-        .leetcode-btn:hover {
-          background:linear-gradient(90deg,#ffb86c,#ff6e7f);
-          color:#232946;
-        }
-        @media (max-width: 700px) {
-          .glass-card { max-width: 98vw; padding: 18px 6vw; }
-          .leetcode-progress-flex { flex-direction: column; gap: 10px; }
-        }
-    </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Raj Shekhar — AI / ML Engineer</title>
+<meta name="description" content="Raj Shekhar — IIT Patna. AI/ML engineer building live deployed systems from classical ML to agentic AI.">
+<meta name="theme-color" content="#eef4f8">
+<link rel="stylesheet" href="assets/css/synapse.css?v=mesh">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 </head>
 <body>
-    <button id="themeToggle" style="position:fixed;top:18px;right:32px;z-index:10000;padding:8px 18px;border-radius:8px;background:linear-gradient(90deg,#7f53ac,#647dee);color:#fff;font-weight:600;border:none;box-shadow:0 2px 8px rgba(100,125,222,0.13);cursor:pointer;">🌙 Dark Mode</button>
-    <hr>
-    <section id="portfolio">
-        <h1>Raj Shekhar</h1>
-        <div class="contact-info">
-            <strong>Indian Institute of Technology, Patna</strong> &mdash; Bachelor of Technology in Mechanical Engineering<br>
-            <strong>Email:</strong> shekharaj0007@gmail.com | <strong>Phone:</strong> +91-8920199042<br>
-            <strong>GitHub:</strong> <a href="https://github.com/shekharaj0007" target="_blank" style="color:#3a7ca5;text-decoration:underline;">shekharaj0007</a>
-            <br>
-            <a href="resume.jpg" target="_blank" rel="noopener noreferrer" style="display:inline-block;margin-top:10px;padding:8px 20px;background:linear-gradient(90deg,#7f53ac,#647dee);color:#fff;border-radius:6px;text-decoration:none;font-weight:500;box-shadow:0 2px 8px rgba(100,125,222,0.13);transition:background 0.3s;cursor:pointer;">Resume</a>
+
+<div class="bg-mesh" aria-hidden="true">
+  <div class="bg-blob bg-blob-a"></div>
+  <div class="bg-blob bg-blob-b"></div>
+  <div class="bg-blob bg-blob-c"></div>
+  <div class="bg-grid"></div>
+</div>
+
+<nav class="nav" id="nav">
+  <a class="nav-logo" href="#">Raj Shekhar</a>
+  <div class="nav-links">
+    <a href="#ml">ML Stack</a>
+    <a href="#projects">Projects</a>
+    <a href="#about">About</a>
+    <a href="#resume">Résumé</a>
+    <a href="#contact">Contact</a>
+  </div>
+  <div class="nav-sp"></div>
+  <a class="nav-leetcode" href="https://leetcode.com/RAJ_SHEKHAR0007/" target="_blank" rel="noopener" title="LeetCode Profile">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M16.102 17.93l-2.697 2.607-.732-.732-2.607-2.697.732-.732 2.607 2.697.732.732zm-1.414-1.414L12 13.172l-2.697 2.607-.732-.732 2.607-2.697.732-.732 2.697 2.607.732.732zM12 2L2 7v10l10 5 10-5V7L12 2zm0 2.18l7.9 3.95L12 12.09 4.1 8.13 12 4.18zM4 9.27l7 3.5v7.46l-7-3.5V9.27zm9 10.96v-7.46l7-3.5v7.46l-7 3.5z"/></svg>
+    LeetCode
+  </a>
+  <a class="nav-cta" href="#contact">Hire me</a>
+</nav>
+
+<header class="hero">
+  <div class="hero-badge"><i></i> <span id="liveCount">Syncing projects…</span></div>
+  <h1>Raj Shekhar<br><em>builds intelligent systems.</em></h1>
+  <p class="hero-lead">AI / ML engineer at IIT Patna. I ship production systems — from computer vision pipelines to RAG assistants and multi-agent platforms. Every project below runs live.</p>
+  <div class="hero-row">
+    <a class="btn btn-dark" href="#projects">See live projects</a>
+    <a class="btn btn-outline" href="#ml">ML knowledge</a>
+    <a class="btn btn-outline" href="https://github.com/shekharaj0007" target="_blank" rel="noopener">GitHub</a>
+    <a class="btn btn-leetcode" href="https://leetcode.com/RAJ_SHEKHAR0007/" target="_blank" rel="noopener">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M16.102 17.93l-2.697 2.607-.732-.732-2.607-2.697.732-.732 2.607 2.697.732.732zm-1.414-1.414L12 13.172l-2.697 2.607-.732-.732 2.607-2.697.732-.732 2.697 2.607.732.732zM12 2L2 7v10l10 5 10-5V7L12 2zm0 2.18l7.9 3.95L12 12.09 4.1 8.13 12 4.18zM4 9.27l7 3.5v7.46l-7-3.5V9.27zm9 10.96v-7.46l7-3.5v7.46l-7 3.5z"/></svg>
+      LeetCode Profile
+    </a>
+  </div>
+  <div class="hero-stats">
+    <div class="hero-stat"><b id="statRepos">—</b><span>Repositories</span></div>
+    <div class="hero-stat"><b id="statLive">—</b><span>Live deploys</span></div>
+    <a class="hero-stat hero-stat-link" id="leetStatLink" href="https://leetcode.com/RAJ_SHEKHAR0007/" target="_blank" rel="noopener">
+      <b id="statLeet">—</b><span>LeetCode solved ↗</span>
+    </a>
+    <div class="hero-stat"><b id="statContrib">—</b><span>Contributions / yr</span></div>
+  </div>
+</header>
+
+<section class="ml-section" id="ml">
+  <div class="wrap">
+    <p class="sec-tag">Knowledge depth</p>
+    <h2 class="sec-title">Machine learning stack</h2>
+    <p class="sec-desc">From mathematical foundations through transformers, RAG, generative AI, and agentic systems — ten deep layers. Click each to explore sub-domains and topics.</p>
+    <div class="ml-stack" id="mlStack"></div>
+  </div>
+</section>
+
+<section class="projects-section" id="projects">
+  <div class="wrap">
+    <p class="sec-tag">Production systems</p>
+    <h2 class="sec-title">Live projects</h2>
+    <p class="sec-desc">Hover or tap a card to see project details and tech stack — click to open the live preview.</p>
+    <div class="proj-bar">
+      <input type="search" id="projSearch" placeholder="Search projects…" autocomplete="off">
+      <select id="projLang"><option value="">All stacks</option></select>
+      <span style="color:#78716c;font-size:0.85rem;align-self:center" id="projCount"></span>
+    </div>
+    <p class="proj-meta-line" id="projLiveLine">—</p>
+    <div class="proj-grid" id="projGrid">
+      <div class="skel"></div><div class="skel"></div><div class="skel"></div>
+    </div>
+  </div>
+</section>
+
+<section id="skills">
+  <div class="wrap">
+    <p class="sec-tag">Toolbox</p>
+    <h2 class="sec-title">Technical skills</h2>
+    <div class="skills-row" id="skillsRow"></div>
+  </div>
+</section>
+
+<section style="background:var(--cream2)">
+  <div class="wrap">
+    <p class="sec-tag">Timeline</p>
+    <h2 class="sec-title">Career path</h2>
+    <div class="journey-row" id="journeyRow"></div>
+  </div>
+</section>
+
+<section id="about">
+  <div class="wrap">
+    <p class="sec-tag">About</p>
+    <h2 class="sec-title">Background</h2>
+    <div class="bento">
+      <div class="bento-card b5">
+        <h4>Profile</h4>
+        <div class="profile-flex">
+          <img id="aboutImg" src="" alt="Raj Shekhar">
+          <div>
+            <h3 id="aboutName">Raj Shekhar</h3>
+            <p class="sub" id="aboutSub"></p>
+            <p id="aboutBio"></p>
+          </div>
         </div>
-        <div style="margin-top: 16px;">
-          <a href="https://github.com/shekharaj0007" target="_blank" rel="noopener noreferrer"
-             style="display:inline-block;padding:10px 24px;margin-right:10px;background:#24292e;color:#fff;border-radius:6px;font-weight:600;text-decoration:none;box-shadow:0 2px 8px rgba(36,41,46,0.13);transition:background 0.2s;">
-            GitHub
+      </div>
+      <div class="bento-card b7">
+        <h4>Education</h4>
+        <ul class="dlist" id="eduList"></ul>
+      </div>
+      <div class="bento-card b6">
+        <h4>Achievements</h4>
+        <ul class="dlist" id="achList"></ul>
+      </div>
+      <div class="bento-card b6">
+        <h4>Leadership</h4>
+        <ul class="dlist" id="rolesList"></ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="resume" class="resume-section">
+  <div class="wrap">
+    <p class="sec-tag">Résumé</p>
+    <h2 class="sec-title">Curriculum vitae</h2>
+    <div class="resume-layout">
+      <aside class="resume-sidebar">
+        <div class="resume-profile">
+          <img id="resumeImg" src="" alt="Raj Shekhar">
+          <h3>Raj Shekhar</h3>
+          <p class="resume-role">AI / ML Engineer</p>
+          <p class="resume-sub">B.Tech · IIT Patna · 4th Year</p>
+        </div>
+        <div class="resume-highlights" id="resumeHighlights"></div>
+        <div class="resume-actions">
+          <a class="btn btn-dark" href="resume.pdf" target="_blank" rel="noopener">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+            Open full PDF
           </a>
-          <a href="leetcode.html" target="_blank" rel="noopener noreferrer"
-             style="display:inline-block;padding:10px 24px;margin-right:10px;background:#ffa116;color:#232946;border-radius:6px;font-weight:600;text-decoration:none;box-shadow:0 2px 8px rgba(255,171,22,0.13);transition:background 0.2s;">
-            LeetCode
+          <a class="btn btn-outline" href="resume.pdf" download="Raj_Shekhar_Resume.pdf">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            Download
           </a>
         </div>
-
-        <h2>LeetCode Progress</h2>
-        <div class="leetcode-section glass-card">
-          <div class="leetcode-header">
-            <img src="https://leetcode.com/static/images/LeetCode_logo_rvs.png" alt="LeetCode" class="leetcode-logo">
-            <span class="leetcode-username">raj shekhar (RAJ_SHEKHAR0007)</span>
-          </div>
-          <div class="leetcode-progress-flex">
-            <div class="circular-progress">
-              <svg>
-                <defs>
-                  <linearGradient id="leetcode-gradient" x1="0%" y1="0%" x2="100%" y2="0%">
-                    <stop offset="0%" stop-color="#ffa116"/>
-                    <stop offset="100%" stop-color="#7f53ac"/>
-                  </linearGradient>
-                </defs>
-                <circle class="circular-bg" cx="48" cy="48" r="40" fill="none"/>
-                <circle class="circular-bar" cx="48" cy="48" r="40" fill="none" stroke-dasharray="13.5 251.2"/>
-                <text class="circular-text" x="48" y="54">6</text>
-              </svg>
-              <div class="circular-label">Solved</div>
-            </div>
-            <div class="leetcode-badges">
-              <span class="leetcode-badge"><span class="badge-icon">🟧</span> DSA</span>
-              <span class="leetcode-badge"><span class="badge-icon">🐍</span> Python</span>
-              <span class="leetcode-badge"><span class="badge-icon">💻</span> C++</span>
-            </div>
-          </div>
-          <div class="leetcode-metrics">
-            <div class="leetcode-metric"><span class="metric-label">Easy</span><span class="metric-value">6</span><div class="leetcode-bar easy"><div class="leetcode-bar-inner" style="width:0.7%"></div></div></div>
-            <div class="leetcode-metric"><span class="metric-label">Medium</span><span class="metric-value">0</span><div class="leetcode-bar medium"><div class="leetcode-bar-inner" style="width:0%"></div></div></div>
-            <div class="leetcode-metric"><span class="metric-label">Hard</span><span class="metric-value">0</span><div class="leetcode-bar hard"><div class="leetcode-bar-inner" style="width:0%"></div></div></div>
-            <div class="leetcode-metric"><span class="metric-label">Rank</span><span class="metric-value">~5,000,000</span></div>
-          </div>
-          <div class="recent-activity">
-            <div class="recent-title">Recent Activity</div>
-            <ul class="recent-list">
-              <li><span class="activity-icon">✅</span> Single Number (Easy) - 8 days ago</li>
-              <li><span class="activity-icon">✅</span> Missing Number (Easy) - 8 days ago</li>
-            </ul>
-          </div>
-          <div class="leetcode-links">
-            <a href="leetcode.html" target="_blank" class="leetcode-btn">View Full Profile</a>
-            <a href="https://leetcode.com/RAJ_SHEKHAR0007/" target="_blank" class="leetcode-btn external">LeetCode <span style="font-size:1.1em;">↗</span></a>
-          </div>
-        </div>
-
-        <h2>Education</h2>
-        <ul class="edu-list">
-            <li><strong>B.Tech</strong>, IIT Patna, 2023-2027, CGPA: 6.5
-            </li>
-            <li><strong>Senior Secondary</strong>, Modern Delhi Public School, Faridabad, 2022, 94.80%</li>
-            <li><strong>Matriculation</strong>, Modern Delhi Public School, Faridabad, 2020, 91.20%</li>
+        <ul class="resume-quick">
+          <li><span>Email</span><a href="mailto:shekharaj0007@gmail.com">shekharaj0007@gmail.com</a></li>
+          <li><span>Phone</span><a href="tel:+918920199042">+91-8920199042</a></li>
+          <li><span>GitHub</span><a href="https://github.com/shekharaj0007" target="_blank" rel="noopener">shekharaj0007</a></li>
+          <li><span>LeetCode</span><a href="https://leetcode.com/RAJ_SHEKHAR0007/" target="_blank" rel="noopener">RAJ_SHEKHAR0007 ↗</a></li>
         </ul>
-
-        <h2>Projects</h2>
-        <div class="projects">
-            <div class="project-card" data-title="Speech-Controlled JARVIS Assistant" data-status="Completed" data-progress="100" data-description="A desktop AI assistant for productivity and automation, featuring voice-activated commands, reminders, and file access.">
-                <span class="project-tagline">Your personal desktop AI assistant for productivity and automation.</span>
-                <strong>Speech-Controlled JARVIS Assistant</strong>
-                <span class="status-badge completed">Completed</span>
-                <div class="progress-bar"><div class="progress" style="width:100%"></div></div>
-                <div class="project-badges">
-                  <span class="badge" title="Python: Main programming language">Python</span>
-                  <span class="badge" title="SpeechRecognition: Voice input">SpeechRecognition</span>
-                  <span class="badge" title="Pyttsx3: Text-to-speech">Pyttsx3</span>
-                  <span class="badge" title="Tkinter: GUI">Tkinter</span>
-                </div>
-                <div class="project-role">Role: Solo Developer</div>
-                <ul>
-                    <li>Voice-activated commands for apps, weather, news, and more</li>
-                    <li>Integrated speech-to-text and text-to-speech</li>
-                    <li>Custom reminders and file access</li>
-                </ul>
-                <div class="project-impact">Impact: Enhanced my automation and GUI development skills.</div>
-                <div class="project-links">
-                  <a href="https://github.com/shekharaj0007/jarvis-assistant" target="_blank" class="btn">Source Code</a>
-                </div>
-            </div>
-            <div class="project-card" data-title="AI Career Coach Chatbot" data-status="In Progress" data-progress="70" data-description="An AI-powered chatbot for career guidance, resume analysis, and job search tips.">
-                <span class="project-tagline">Intelligent career guidance powered by AI and NLP.</span>
-                <strong>AI Career Coach Chatbot</strong>
-                <span class="status-badge inprogress">In Progress</span>
-                <div class="progress-bar"><div class="progress" style="width:70%"></div></div>
-                <div class="project-badges">
-                  <span class="badge" title="LangChain: LLM framework">LangChain</span>
-                  <span class="badge" title="OpenAI API: AI model">OpenAI API</span>
-                  <span class="badge" title="FAISS: Vector search">FAISS</span>
-                  <span class="badge" title="Streamlit: Web app">Streamlit</span>
-                </div>
-                <div class="project-role">Role: Team Project (Lead Developer)</div>
-                <ul>
-                    <li>Resume analysis and job tips chatbot using FAISS and GPT</li>
-                    <li>File uploads, multi-turn chat, and real-time feedback</li>
-                </ul>
-                <div class="project-impact">Impact: Helped users improve their resumes and job search strategies.</div>
-                <div class="project-links">
-                  <a href="https://github.com/shekharaj0007/ai-career-coach-chatbot" target="_blank" class="btn">Source Code</a>
-                </div>
-            </div>
-            <div class="project-card" data-title="SkillSphere – Adaptive Learning Platform" data-status="Completed" data-progress="100" data-description="A personalized learning platform with adaptive quizzes and real-time analytics.">
-                <span class="project-tagline">Personalized learning with real-time analytics and adaptive quizzes.</span>
-                <strong>SkillSphere – Adaptive Learning Platform</strong>
-                <span class="status-badge completed">Completed</span>
-                <div class="progress-bar"><div class="progress" style="width:100%"></div></div>
-                <div class="project-badges">
-                  <span class="badge" title="MERN Stack: Full stack">MERN Stack</span>
-                  <span class="badge" title="Chart.js: Data viz">Chart.js</span>
-                  <span class="badge" title="WebSocket: Real-time">WebSocket</span>
-                </div>
-                <div class="project-role">Role: Full Stack Developer</div>
-                <ul>
-                    <li>Course enrollment, quizzes, adaptive learning, and dashboards</li>
-                    <li>Admin panel for content uploads and monitoring</li>
-                </ul>
-                <div class="project-impact">Impact: Enabled personalized education and data-driven insights for learners.</div>
-                <div class="project-links">
-                  <a href="https://github.com/shekharaj0007/skillsphere" target="_blank" class="btn">Source Code</a>
-                </div>
-            </div>
-            <div class="project-card" data-title="FinZen – Personal Finance Tracker" data-status="Completed" data-progress="100" data-description="A secure, offline-capable budgeting tool for personal finance management.">
-                <span class="project-tagline">Simple, secure, and offline-capable budgeting tool.</span>
-                <strong>FinZen – Personal Finance Tracker</strong>
-                <span class="status-badge completed">Completed</span>
-                <div class="progress-bar"><div class="progress" style="width:100%"></div></div>
-                <div class="project-badges">
-                  <span class="badge" title="Flask: Backend">Flask</span>
-                  <span class="badge" title="React: Frontend">React</span>
-                  <span class="badge" title="SQLite: Database">SQLite</span>
-                  <span class="badge" title="Chart.js: Data viz">Chart.js</span>
-                </div>
-                <div class="project-role">Role: Solo Developer</div>
-                <ul>
-                    <li>Budgeting tool for income/expenses, trends, and category insights</li>
-                    <li>Simple, secure, offline-capable interface</li>
-                </ul>
-                <div class="project-impact">Impact: Improved my skills in full-stack development and data visualization.</div>
-                <div class="project-links">
-                  <a href="https://github.com/shekharaj0007/finzen" target="_blank" class="btn">Source Code</a>
-                </div>
-            </div>
+      </aside>
+      <div class="resume-viewer">
+        <div class="resume-toolbar">
+          <span class="resume-doc-label">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+            IIT_Patna_Tech_Resume.pdf
+          </span>
+          <div class="resume-toolbar-actions">
+            <a href="resume.pdf" target="_blank" rel="noopener">Expand</a>
+            <a href="resume.pdf" download="Raj_Shekhar_Resume.pdf">Save</a>
+          </div>
         </div>
-
-        <!-- Modal for project details -->
-        <div id="projectModal" class="modal" style="display:none;position:fixed;z-index:9999;left:0;top:0;width:100vw;height:100vh;background:rgba(44,62,80,0.75);align-items:center;justify-content:center;">
-            <div class="modal-content" style="background:#fff;padding:32px 28px;border-radius:18px;max-width:420px;box-shadow:0 8px 32px rgba(60,120,165,0.25);position:relative;">
-                <span id="closeModal" style="position:absolute;top:18px;right:28px;font-size:2.2em;color:#7f53ac;cursor:pointer;font-weight:bold;">&times;</span>
-                <h2 id="modalTitle"></h2>
-                <span id="modalStatus" class="status-badge"></span>
-                <div class="progress-bar" style="margin-bottom:18px;"><div class="progress" id="modalProgress"></div></div>
-                <p id="modalDesc" style="font-size:1.1em;color:#333;margin-bottom:0;"></p>
-            </div>
+        <div class="resume-frame">
+          <iframe src="resume.pdf#view=FitH" title="Raj Shekhar Résumé"></iframe>
         </div>
+      </div>
+    </div>
+  </div>
+</section>
 
-        <h2>Skills</h2>
-        <div class="skills-list">
-            <span class="skill-badge">C++</span>
-            <span class="skill-badge">Python</span>
-            <span class="skill-badge">SQL</span>
-            <span class="skill-badge">HTML</span>
-            <span class="skill-badge">CSS</span>
-            <span class="skill-badge">JavaScript</span>
-            <span class="skill-badge">FastAPI</span>
-            <span class="skill-badge">LangChain</span>
-            <span class="skill-badge">Hugging Face</span>
-            <span class="skill-badge">Redux</span>
-            <span class="skill-badge">Tailwind CSS</span>
-            <span class="skill-badge">Framer Motion</span>
-            <span class="skill-badge">Socket.IO</span>
-            <span class="skill-badge">Docker</span>
-            <span class="skill-badge">GitHub Actions</span>
-            <span class="skill-badge">Firebase</span>
-            <span class="skill-badge">Netlify</span>
-            <span class="skill-badge">Vercel</span>
-            <span class="skill-badge">Postman</span>
-            <span class="skill-badge">Jupyter</span>
-            <span class="skill-badge">Numpy</span>
-            <span class="skill-badge">Pandas</span>
-            <span class="skill-badge">Matplotlib</span>
-            <span class="skill-badge">Scikit-learn</span>
-            <span class="skill-badge">TensorFlow</span>
-            <span class="skill-badge">Flask</span>
-            <span class="skill-badge">Excel</span>
-            <span class="skill-badge">Seaborn</span>
-            <span class="skill-badge">Power BI</span>
-            <span class="skill-badge">Tableau</span>
-            <span class="skill-badge">YOLOv5</span>
-            <span class="skill-badge">YOLOv8</span>
-            <span class="skill-badge">LabelImg</span>
-            <span class="skill-badge">MediaPipe</span>
-            <span class="skill-badge">Leadership</span>
-            <span class="skill-badge">Event Management</span>
-            <span class="skill-badge">Writing</span>
-            <span class="skill-badge">Public Speaking</span>
-            <span class="skill-badge">Time Management</span>
-        </div>
+<section id="contact">
+  <div class="wrap">
+    <p class="sec-tag">Contact</p>
+    <h2 class="sec-title">Let's work together</h2>
+    <p class="sec-desc">Open to internships and full-time roles in AI, ML, and engineering.</p>
+    <div class="contact-row" id="contactRow"></div>
+  </div>
+</section>
 
-        <h2>Achievements</h2>
-        <ul class="ach-list">
-            <li>JeeMains2023: Secured 99.93 percentile (Top 12,000 nationally)</li>
-            <li>Jee Advance 2023: Secured 9k rank (Top 1,50,000 nationally)</li>
-            <li>Olympiads: SOF-IMO state (HARYANA) gold medalist (2022, 2020, 2019)</li>
-        </ul>
+<footer>
+  Raj Shekhar · IIT Patna · Synapse Portfolio · <a href="https://github.com/shekharaj0007" target="_blank" rel="noopener">GitHub</a>
+</footer>
 
-        <h2>Positions of Responsibility</h2>
-        <ul class="pos-list">
-            <li>Core Member: Team Phoenix, Robotics Club, IIT Patna Core (Aug 2023 - Present)</li>
-            <li>Member: Robotics and Aviation Club, IIT Patna (June 2024 - Present)</li>
-            <li>Sub Coordinator: Students Club of Mechanical Engineering, IIT Patna (June 2024 - Present)</li>
-        </ul>
-    </section>
-    <script>
-    // Light/Dark mode toggle
-    const themeToggle = document.getElementById('themeToggle');
-    let darkMode = false;
-    themeToggle.onclick = function() {
-      darkMode = !darkMode;
-      document.body.classList.toggle('dark-mode', darkMode);
-      themeToggle.innerHTML = darkMode ? '☀️ Light Mode' : '🌙 Dark Mode';
-    };
-    // Card tilt effect
-    document.querySelectorAll('.project-card').forEach(card => {
-      card.addEventListener('mousemove', e => {
-        const rect = card.getBoundingClientRect();
-        const x = e.clientX - rect.left;
-        const y = e.clientY - rect.top;
-        const centerX = rect.width/2;
-        const centerY = rect.height/2;
-        const rotateX = (y-centerY)/10;
-        const rotateY = (centerX-x)/10;
-        card.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale(1.04)`;
-      });
-      card.addEventListener('mouseleave', () => {
-        card.style.transform = '';
-      });
-    });
-    // Modal popup for project details
-    document.querySelectorAll('.project-card').forEach(card => {
-      card.addEventListener('click', function(e) {
-        if(e.target.classList.contains('btn')) return; // Don't open modal if button clicked
-        const modal = document.getElementById('projectModal');
-        document.getElementById('modalTitle').textContent = card.getAttribute('data-title');
-        document.getElementById('modalStatus').textContent = card.getAttribute('data-status');
-        document.getElementById('modalStatus').className = 'status-badge ' + (card.getAttribute('data-status').toLowerCase().replace(' ','')||'');
-        document.getElementById('modalProgress').style.width = card.getAttribute('data-progress')+'%';
-        document.getElementById('modalDesc').textContent = card.getAttribute('data-description');
-        modal.style.display = 'flex';
-      });
-    });
-    document.getElementById('closeModal').onclick = function() {
-      document.getElementById('projectModal').style.display = 'none';
-    };
-    window.onclick = function(event) {
-      if(event.target === document.getElementById('projectModal')) {
-        document.getElementById('projectModal').style.display = 'none';
-      }
-    };
-    // Scroll-triggered animation for bars
-    document.addEventListener('DOMContentLoaded', function() {
-        const observer = new window.IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('in-view');
-                }
-            });
-        }, { threshold: 0.15 });
+<div id="viewer">
+  <div class="viewer-top">
+    <span style="color:#34d399;font-weight:600;font-size:0.75rem">● LIVE</span>
+    <h4 id="viewerTitle">Project</h4>
+    <a id="viewerOpen" href="#" target="_blank" rel="noopener">Open tab ↗</a>
+    <a id="viewerSource" href="#" target="_blank" rel="noopener">Source</a>
+    <button class="x" id="viewerClose" type="button">Close</button>
+  </div>
+  <div class="viewer-frame">
+    <div class="viewer-msg" id="viewerMsg">
+      <p>Preview couldn't embed — security headers on the deployment.</p>
+      <a class="btn btn-dark" id="viewerLaunch" href="#" style="margin-top:20px">Launch live site ↗</a>
+    </div>
+    <iframe id="viewerFrame" title="Live preview" sandbox="allow-scripts allow-same-origin allow-forms allow-popups"></iframe>
+  </div>
+</div>
 
-        document.querySelectorAll('.edu-list li, .ach-list li, .pos-list li, .project-card').forEach(el => {
-            observer.observe(el);
-        });
-    });
-    // Button ripple effect
-    document.querySelectorAll('.btn').forEach(btn => {
-      btn.addEventListener('click', function(e) {
-        const ripple = document.createElement('span');
-        ripple.className = 'ripple';
-        ripple.style.left = (e.offsetX-10)+'px';
-        ripple.style.top = (e.offsetY-10)+'px';
-        this.appendChild(ripple);
-        setTimeout(()=>ripple.remove(), 600);
-      });
-    });
-    </script>
+<script src="assets/js/data.js?v=mesh"></script>
+<script src="assets/js/live.js?v=mesh"></script>
+<script src="assets/js/synapse.js?v=mesh"></script>
+<script>
+  /* Update hero badge once projects load */
+  const obs = new MutationObserver(() => {
+    const live = document.getElementById('statLive')?.textContent;
+    const repos = document.getElementById('statRepos')?.textContent;
+    if (live && live !== '—') {
+      document.getElementById('liveCount').textContent = live + ' live systems · ' + repos + ' repos';
+      obs.disconnect();
+    }
+  });
+  obs.observe(document.getElementById('statLive'), { childList: true, characterData: true, subtree: true });
+</script>
 </body>
-</html> 
+</html>

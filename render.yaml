@@ -1,0 +1,7 @@
+services:
+  - type: web
+    name: raj-shekhar-portfolio
+    runtime: static
+    buildCommand: "true"
+    staticPublishPath: ./templates
+    autoDeployTrigger: commit
