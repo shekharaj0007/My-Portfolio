@@ -45,6 +45,18 @@ function liveUrl(repo) {
 
 /* Rich project metadata for flashcard backs — sourced from résumé + repos. */
 const PROJECT_META = {
+  'collaborative-pm-platform': {
+    summary: 'Task board with JWT login, role checks, WebSocket updates, and a Redis cache path. Local run uses H2; Docker Compose uses PostgreSQL and Redis.',
+    stack: ['Java', 'Spring Boot', 'React', 'PostgreSQL', 'Redis', 'WebSockets', 'JWT', 'Docker']
+  },
+  'intelligent-support-system': {
+    summary: 'Support queue that classifies synthetic tickets, drafts a reply from similar resolved cases, and waits for an agent to approve it.',
+    stack: ['Python', 'FastAPI', 'React', 'PostgreSQL', 'TF-IDF', 'Logistic Regression', 'XGBoost', 'JWT']
+  },
+  'enterprise-doc-intelligence': {
+    summary: 'Document Q&A with hybrid retrieval, FAISS, cited answers, and an abstain path when the indexed notes do not support the question.',
+    stack: ['Python', 'FastAPI', 'React', 'FAISS', 'BM25', 'PostgreSQL', 'RAG', 'Docker']
+  },
   'GatiSetu': {
     summary: 'AI mobility intelligence platform for transportation-mode classification and traffic-aware ETA prediction from GPS trajectories.',
     stack: ['Python', 'Random Forest', 'scikit-learn', 'FastAPI', 'Geospatial ML', 'Google Maps API', 'OSRM', 'Render']
